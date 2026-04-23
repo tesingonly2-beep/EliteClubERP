@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { useMemo } from "react";
 import { useAuth } from "@/lib/auth";
-import { useStore, formatINR, isExpired } from "@/lib/store";
+import { useStore, formatINR } from "@/lib/store";
 import { KPICard } from "@/components/KPICard";
 import { IndianRupee, TrendingUp, Crown, Receipt, Plus, QrCode, UserPlus } from "lucide-react";
 import { Link } from "@tanstack/react-router";
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/partner/")({
 
 function PartnerDashboard() {
   const { user } = useAuth();
-  const { transactions, partners, members } = useStore();
+  const { transactions, partners } = useStore();
 
   const partner = partners.find((p) => p.id === user?.partnerId);
   const myTxns = useMemo(() => transactions.filter((t) => t.partnerId === user?.partnerId), [transactions, user]);
@@ -92,7 +92,6 @@ function PartnerDashboard() {
           </div>
         </div>
       </div>
-      {void members && null}
     </DashboardLayout>
   );
 }

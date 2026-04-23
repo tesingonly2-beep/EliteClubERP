@@ -11,7 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PartnerIndexRouteImport } from './routes/partner/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as PartnerReportsRouteImport } from './routes/partner/reports'
+import { Route as PartnerMembersRouteImport } from './routes/partner/members'
+import { Route as PartnerBillingRouteImport } from './routes/partner/billing'
 import { Route as AdminTransactionsRouteImport } from './routes/admin/transactions'
 import { Route as AdminSettlementsRouteImport } from './routes/admin/settlements'
 import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
@@ -30,9 +34,29 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PartnerIndexRoute = PartnerIndexRouteImport.update({
+  id: '/partner/',
+  path: '/partner/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnerReportsRoute = PartnerReportsRouteImport.update({
+  id: '/partner/reports',
+  path: '/partner/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnerMembersRoute = PartnerMembersRouteImport.update({
+  id: '/partner/members',
+  path: '/partner/members',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnerBillingRoute = PartnerBillingRouteImport.update({
+  id: '/partner/billing',
+  path: '/partner/billing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminTransactionsRoute = AdminTransactionsRouteImport.update({
@@ -81,7 +105,11 @@ export interface FileRoutesByFullPath {
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/settlements': typeof AdminSettlementsRoute
   '/admin/transactions': typeof AdminTransactionsRoute
+  '/partner/billing': typeof PartnerBillingRoute
+  '/partner/members': typeof PartnerMembersRoute
+  '/partner/reports': typeof PartnerReportsRoute
   '/admin/': typeof AdminIndexRoute
+  '/partner/': typeof PartnerIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -93,7 +121,11 @@ export interface FileRoutesByTo {
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/settlements': typeof AdminSettlementsRoute
   '/admin/transactions': typeof AdminTransactionsRoute
+  '/partner/billing': typeof PartnerBillingRoute
+  '/partner/members': typeof PartnerMembersRoute
+  '/partner/reports': typeof PartnerReportsRoute
   '/admin': typeof AdminIndexRoute
+  '/partner': typeof PartnerIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -106,7 +138,11 @@ export interface FileRoutesById {
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/settlements': typeof AdminSettlementsRoute
   '/admin/transactions': typeof AdminTransactionsRoute
+  '/partner/billing': typeof PartnerBillingRoute
+  '/partner/members': typeof PartnerMembersRoute
+  '/partner/reports': typeof PartnerReportsRoute
   '/admin/': typeof AdminIndexRoute
+  '/partner/': typeof PartnerIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -120,7 +156,11 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/settlements'
     | '/admin/transactions'
+    | '/partner/billing'
+    | '/partner/members'
+    | '/partner/reports'
     | '/admin/'
+    | '/partner/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -132,7 +172,11 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/settlements'
     | '/admin/transactions'
+    | '/partner/billing'
+    | '/partner/members'
+    | '/partner/reports'
     | '/admin'
+    | '/partner'
   id:
     | '__root__'
     | '/'
@@ -144,7 +188,11 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/settlements'
     | '/admin/transactions'
+    | '/partner/billing'
+    | '/partner/members'
+    | '/partner/reports'
     | '/admin/'
+    | '/partner/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -157,7 +205,11 @@ export interface RootRouteChildren {
   AdminSettingsRoute: typeof AdminSettingsRoute
   AdminSettlementsRoute: typeof AdminSettlementsRoute
   AdminTransactionsRoute: typeof AdminTransactionsRoute
+  PartnerBillingRoute: typeof PartnerBillingRoute
+  PartnerMembersRoute: typeof PartnerMembersRoute
+  PartnerReportsRoute: typeof PartnerReportsRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  PartnerIndexRoute: typeof PartnerIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -176,11 +228,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/partner/': {
+      id: '/partner/'
+      path: '/partner'
+      fullPath: '/partner/'
+      preLoaderRoute: typeof PartnerIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/': {
       id: '/admin/'
       path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partner/reports': {
+      id: '/partner/reports'
+      path: '/partner/reports'
+      fullPath: '/partner/reports'
+      preLoaderRoute: typeof PartnerReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partner/members': {
+      id: '/partner/members'
+      path: '/partner/members'
+      fullPath: '/partner/members'
+      preLoaderRoute: typeof PartnerMembersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partner/billing': {
+      id: '/partner/billing'
+      path: '/partner/billing'
+      fullPath: '/partner/billing'
+      preLoaderRoute: typeof PartnerBillingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/transactions': {
@@ -245,7 +325,11 @@ const rootRouteChildren: RootRouteChildren = {
   AdminSettingsRoute: AdminSettingsRoute,
   AdminSettlementsRoute: AdminSettlementsRoute,
   AdminTransactionsRoute: AdminTransactionsRoute,
+  PartnerBillingRoute: PartnerBillingRoute,
+  PartnerMembersRoute: PartnerMembersRoute,
+  PartnerReportsRoute: PartnerReportsRoute,
   AdminIndexRoute: AdminIndexRoute,
+  PartnerIndexRoute: PartnerIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
