@@ -12,10 +12,13 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PartnerIndexRouteImport } from './routes/partner/index'
+import { Route as MemberIndexRouteImport } from './routes/member/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as PartnerReportsRouteImport } from './routes/partner/reports'
 import { Route as PartnerMembersRouteImport } from './routes/partner/members'
 import { Route as PartnerBillingRouteImport } from './routes/partner/billing'
+import { Route as MemberSubscriptionRouteImport } from './routes/member/subscription'
+import { Route as MemberHistoryRouteImport } from './routes/member/history'
 import { Route as AdminTransactionsRouteImport } from './routes/admin/transactions'
 import { Route as AdminSettlementsRouteImport } from './routes/admin/settlements'
 import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
@@ -39,6 +42,11 @@ const PartnerIndexRoute = PartnerIndexRouteImport.update({
   path: '/partner/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MemberIndexRoute = MemberIndexRouteImport.update({
+  id: '/member/',
+  path: '/member/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
@@ -57,6 +65,16 @@ const PartnerMembersRoute = PartnerMembersRouteImport.update({
 const PartnerBillingRoute = PartnerBillingRouteImport.update({
   id: '/partner/billing',
   path: '/partner/billing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MemberSubscriptionRoute = MemberSubscriptionRouteImport.update({
+  id: '/member/subscription',
+  path: '/member/subscription',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MemberHistoryRoute = MemberHistoryRouteImport.update({
+  id: '/member/history',
+  path: '/member/history',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminTransactionsRoute = AdminTransactionsRouteImport.update({
@@ -105,10 +123,13 @@ export interface FileRoutesByFullPath {
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/settlements': typeof AdminSettlementsRoute
   '/admin/transactions': typeof AdminTransactionsRoute
+  '/member/history': typeof MemberHistoryRoute
+  '/member/subscription': typeof MemberSubscriptionRoute
   '/partner/billing': typeof PartnerBillingRoute
   '/partner/members': typeof PartnerMembersRoute
   '/partner/reports': typeof PartnerReportsRoute
   '/admin/': typeof AdminIndexRoute
+  '/member/': typeof MemberIndexRoute
   '/partner/': typeof PartnerIndexRoute
 }
 export interface FileRoutesByTo {
@@ -121,10 +142,13 @@ export interface FileRoutesByTo {
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/settlements': typeof AdminSettlementsRoute
   '/admin/transactions': typeof AdminTransactionsRoute
+  '/member/history': typeof MemberHistoryRoute
+  '/member/subscription': typeof MemberSubscriptionRoute
   '/partner/billing': typeof PartnerBillingRoute
   '/partner/members': typeof PartnerMembersRoute
   '/partner/reports': typeof PartnerReportsRoute
   '/admin': typeof AdminIndexRoute
+  '/member': typeof MemberIndexRoute
   '/partner': typeof PartnerIndexRoute
 }
 export interface FileRoutesById {
@@ -138,10 +162,13 @@ export interface FileRoutesById {
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/settlements': typeof AdminSettlementsRoute
   '/admin/transactions': typeof AdminTransactionsRoute
+  '/member/history': typeof MemberHistoryRoute
+  '/member/subscription': typeof MemberSubscriptionRoute
   '/partner/billing': typeof PartnerBillingRoute
   '/partner/members': typeof PartnerMembersRoute
   '/partner/reports': typeof PartnerReportsRoute
   '/admin/': typeof AdminIndexRoute
+  '/member/': typeof MemberIndexRoute
   '/partner/': typeof PartnerIndexRoute
 }
 export interface FileRouteTypes {
@@ -156,10 +183,13 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/settlements'
     | '/admin/transactions'
+    | '/member/history'
+    | '/member/subscription'
     | '/partner/billing'
     | '/partner/members'
     | '/partner/reports'
     | '/admin/'
+    | '/member/'
     | '/partner/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -172,10 +202,13 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/settlements'
     | '/admin/transactions'
+    | '/member/history'
+    | '/member/subscription'
     | '/partner/billing'
     | '/partner/members'
     | '/partner/reports'
     | '/admin'
+    | '/member'
     | '/partner'
   id:
     | '__root__'
@@ -188,10 +221,13 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/settlements'
     | '/admin/transactions'
+    | '/member/history'
+    | '/member/subscription'
     | '/partner/billing'
     | '/partner/members'
     | '/partner/reports'
     | '/admin/'
+    | '/member/'
     | '/partner/'
   fileRoutesById: FileRoutesById
 }
@@ -205,10 +241,13 @@ export interface RootRouteChildren {
   AdminSettingsRoute: typeof AdminSettingsRoute
   AdminSettlementsRoute: typeof AdminSettlementsRoute
   AdminTransactionsRoute: typeof AdminTransactionsRoute
+  MemberHistoryRoute: typeof MemberHistoryRoute
+  MemberSubscriptionRoute: typeof MemberSubscriptionRoute
   PartnerBillingRoute: typeof PartnerBillingRoute
   PartnerMembersRoute: typeof PartnerMembersRoute
   PartnerReportsRoute: typeof PartnerReportsRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  MemberIndexRoute: typeof MemberIndexRoute
   PartnerIndexRoute: typeof PartnerIndexRoute
 }
 
@@ -233,6 +272,13 @@ declare module '@tanstack/react-router' {
       path: '/partner'
       fullPath: '/partner/'
       preLoaderRoute: typeof PartnerIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/member/': {
+      id: '/member/'
+      path: '/member'
+      fullPath: '/member/'
+      preLoaderRoute: typeof MemberIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -261,6 +307,20 @@ declare module '@tanstack/react-router' {
       path: '/partner/billing'
       fullPath: '/partner/billing'
       preLoaderRoute: typeof PartnerBillingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/member/subscription': {
+      id: '/member/subscription'
+      path: '/member/subscription'
+      fullPath: '/member/subscription'
+      preLoaderRoute: typeof MemberSubscriptionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/member/history': {
+      id: '/member/history'
+      path: '/member/history'
+      fullPath: '/member/history'
+      preLoaderRoute: typeof MemberHistoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/transactions': {
@@ -325,10 +385,13 @@ const rootRouteChildren: RootRouteChildren = {
   AdminSettingsRoute: AdminSettingsRoute,
   AdminSettlementsRoute: AdminSettlementsRoute,
   AdminTransactionsRoute: AdminTransactionsRoute,
+  MemberHistoryRoute: MemberHistoryRoute,
+  MemberSubscriptionRoute: MemberSubscriptionRoute,
   PartnerBillingRoute: PartnerBillingRoute,
   PartnerMembersRoute: PartnerMembersRoute,
   PartnerReportsRoute: PartnerReportsRoute,
   AdminIndexRoute: AdminIndexRoute,
+  MemberIndexRoute: MemberIndexRoute,
   PartnerIndexRoute: PartnerIndexRoute,
 }
 export const routeTree = rootRouteImport
