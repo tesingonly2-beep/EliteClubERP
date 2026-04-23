@@ -3,7 +3,7 @@ import { DashboardLayout } from "@/components/DashboardLayout";
 import { useAuth } from "@/lib/auth";
 import { useStore, formatINR } from "@/lib/store";
 import { useState } from "react";
-import { Search, MapPin } from "lucide-react";
+import { Search } from "lucide-react";
 
 export const Route = createFileRoute("/member/history")({
   component: HistoryPage,
@@ -78,7 +78,6 @@ function HistoryPage() {
           )}
         </div>
       </div>
-      {void MapPin}
     </DashboardLayout>
   );
 }
