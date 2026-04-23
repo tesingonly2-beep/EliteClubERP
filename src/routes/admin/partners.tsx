@@ -10,7 +10,7 @@ export const Route = createFileRoute("/admin/partners")({
 });
 
 function PartnersPage() {
-  const { partners, transactions, members, addPartner, updatePartner, deletePartner } = useStore();
+  const { partners, transactions, addPartner, updatePartner, deletePartner } = useStore();
   const [search, setSearch] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showAdd, setShowAdd] = useState(false);
@@ -149,7 +149,6 @@ function PartnersPage() {
           </div>
         )}
       </div>
-      {void members && null}
     </DashboardLayout>
   );
 }
