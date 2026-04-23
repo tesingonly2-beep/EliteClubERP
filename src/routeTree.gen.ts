@@ -9,48 +9,27 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TransactionsRouteImport } from './routes/transactions'
-import { Route as SettlementsRouteImport } from './routes/settlements'
-import { Route as SettingsRouteImport } from './routes/settings'
-import { Route as ReportsRouteImport } from './routes/reports'
-import { Route as PlansRouteImport } from './routes/plans'
-import { Route as PartnersRouteImport } from './routes/partners'
-import { Route as MembersRouteImport } from './routes/members'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PartnerIndexRouteImport } from './routes/partner/index'
+import { Route as MemberIndexRouteImport } from './routes/member/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as PartnerReportsRouteImport } from './routes/partner/reports'
+import { Route as PartnerMembersRouteImport } from './routes/partner/members'
+import { Route as PartnerBillingRouteImport } from './routes/partner/billing'
+import { Route as MemberSubscriptionRouteImport } from './routes/member/subscription'
+import { Route as MemberHistoryRouteImport } from './routes/member/history'
+import { Route as AdminTransactionsRouteImport } from './routes/admin/transactions'
+import { Route as AdminSettlementsRouteImport } from './routes/admin/settlements'
+import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
+import { Route as AdminReportsRouteImport } from './routes/admin/reports'
+import { Route as AdminPlansRouteImport } from './routes/admin/plans'
+import { Route as AdminPartnersRouteImport } from './routes/admin/partners'
+import { Route as AdminMembersRouteImport } from './routes/admin/members'
 
-const TransactionsRoute = TransactionsRouteImport.update({
-  id: '/transactions',
-  path: '/transactions',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SettlementsRoute = SettlementsRouteImport.update({
-  id: '/settlements',
-  path: '/settlements',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SettingsRoute = SettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReportsRoute = ReportsRouteImport.update({
-  id: '/reports',
-  path: '/reports',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PlansRoute = PlansRouteImport.update({
-  id: '/plans',
-  path: '/plans',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PartnersRoute = PartnersRouteImport.update({
-  id: '/partners',
-  path: '/partners',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MembersRoute = MembersRouteImport.update({
-  id: '/members',
-  path: '/members',
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -58,131 +37,227 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PartnerIndexRoute = PartnerIndexRouteImport.update({
+  id: '/partner/',
+  path: '/partner/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MemberIndexRoute = MemberIndexRouteImport.update({
+  id: '/member/',
+  path: '/member/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnerReportsRoute = PartnerReportsRouteImport.update({
+  id: '/partner/reports',
+  path: '/partner/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnerMembersRoute = PartnerMembersRouteImport.update({
+  id: '/partner/members',
+  path: '/partner/members',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnerBillingRoute = PartnerBillingRouteImport.update({
+  id: '/partner/billing',
+  path: '/partner/billing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MemberSubscriptionRoute = MemberSubscriptionRouteImport.update({
+  id: '/member/subscription',
+  path: '/member/subscription',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MemberHistoryRoute = MemberHistoryRouteImport.update({
+  id: '/member/history',
+  path: '/member/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminTransactionsRoute = AdminTransactionsRouteImport.update({
+  id: '/admin/transactions',
+  path: '/admin/transactions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSettlementsRoute = AdminSettlementsRouteImport.update({
+  id: '/admin/settlements',
+  path: '/admin/settlements',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminReportsRoute = AdminReportsRouteImport.update({
+  id: '/admin/reports',
+  path: '/admin/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPlansRoute = AdminPlansRouteImport.update({
+  id: '/admin/plans',
+  path: '/admin/plans',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPartnersRoute = AdminPartnersRouteImport.update({
+  id: '/admin/partners',
+  path: '/admin/partners',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminMembersRoute = AdminMembersRouteImport.update({
+  id: '/admin/members',
+  path: '/admin/members',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/members': typeof MembersRoute
-  '/partners': typeof PartnersRoute
-  '/plans': typeof PlansRoute
-  '/reports': typeof ReportsRoute
-  '/settings': typeof SettingsRoute
-  '/settlements': typeof SettlementsRoute
-  '/transactions': typeof TransactionsRoute
+  '/login': typeof LoginRoute
+  '/admin/members': typeof AdminMembersRoute
+  '/admin/partners': typeof AdminPartnersRoute
+  '/admin/plans': typeof AdminPlansRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/settlements': typeof AdminSettlementsRoute
+  '/admin/transactions': typeof AdminTransactionsRoute
+  '/member/history': typeof MemberHistoryRoute
+  '/member/subscription': typeof MemberSubscriptionRoute
+  '/partner/billing': typeof PartnerBillingRoute
+  '/partner/members': typeof PartnerMembersRoute
+  '/partner/reports': typeof PartnerReportsRoute
+  '/admin/': typeof AdminIndexRoute
+  '/member/': typeof MemberIndexRoute
+  '/partner/': typeof PartnerIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/members': typeof MembersRoute
-  '/partners': typeof PartnersRoute
-  '/plans': typeof PlansRoute
-  '/reports': typeof ReportsRoute
-  '/settings': typeof SettingsRoute
-  '/settlements': typeof SettlementsRoute
-  '/transactions': typeof TransactionsRoute
+  '/login': typeof LoginRoute
+  '/admin/members': typeof AdminMembersRoute
+  '/admin/partners': typeof AdminPartnersRoute
+  '/admin/plans': typeof AdminPlansRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/settlements': typeof AdminSettlementsRoute
+  '/admin/transactions': typeof AdminTransactionsRoute
+  '/member/history': typeof MemberHistoryRoute
+  '/member/subscription': typeof MemberSubscriptionRoute
+  '/partner/billing': typeof PartnerBillingRoute
+  '/partner/members': typeof PartnerMembersRoute
+  '/partner/reports': typeof PartnerReportsRoute
+  '/admin': typeof AdminIndexRoute
+  '/member': typeof MemberIndexRoute
+  '/partner': typeof PartnerIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/members': typeof MembersRoute
-  '/partners': typeof PartnersRoute
-  '/plans': typeof PlansRoute
-  '/reports': typeof ReportsRoute
-  '/settings': typeof SettingsRoute
-  '/settlements': typeof SettlementsRoute
-  '/transactions': typeof TransactionsRoute
+  '/login': typeof LoginRoute
+  '/admin/members': typeof AdminMembersRoute
+  '/admin/partners': typeof AdminPartnersRoute
+  '/admin/plans': typeof AdminPlansRoute
+  '/admin/reports': typeof AdminReportsRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/settlements': typeof AdminSettlementsRoute
+  '/admin/transactions': typeof AdminTransactionsRoute
+  '/member/history': typeof MemberHistoryRoute
+  '/member/subscription': typeof MemberSubscriptionRoute
+  '/partner/billing': typeof PartnerBillingRoute
+  '/partner/members': typeof PartnerMembersRoute
+  '/partner/reports': typeof PartnerReportsRoute
+  '/admin/': typeof AdminIndexRoute
+  '/member/': typeof MemberIndexRoute
+  '/partner/': typeof PartnerIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/members'
-    | '/partners'
-    | '/plans'
-    | '/reports'
-    | '/settings'
-    | '/settlements'
-    | '/transactions'
+    | '/login'
+    | '/admin/members'
+    | '/admin/partners'
+    | '/admin/plans'
+    | '/admin/reports'
+    | '/admin/settings'
+    | '/admin/settlements'
+    | '/admin/transactions'
+    | '/member/history'
+    | '/member/subscription'
+    | '/partner/billing'
+    | '/partner/members'
+    | '/partner/reports'
+    | '/admin/'
+    | '/member/'
+    | '/partner/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/members'
-    | '/partners'
-    | '/plans'
-    | '/reports'
-    | '/settings'
-    | '/settlements'
-    | '/transactions'
+    | '/login'
+    | '/admin/members'
+    | '/admin/partners'
+    | '/admin/plans'
+    | '/admin/reports'
+    | '/admin/settings'
+    | '/admin/settlements'
+    | '/admin/transactions'
+    | '/member/history'
+    | '/member/subscription'
+    | '/partner/billing'
+    | '/partner/members'
+    | '/partner/reports'
+    | '/admin'
+    | '/member'
+    | '/partner'
   id:
     | '__root__'
     | '/'
-    | '/members'
-    | '/partners'
-    | '/plans'
-    | '/reports'
-    | '/settings'
-    | '/settlements'
-    | '/transactions'
+    | '/login'
+    | '/admin/members'
+    | '/admin/partners'
+    | '/admin/plans'
+    | '/admin/reports'
+    | '/admin/settings'
+    | '/admin/settlements'
+    | '/admin/transactions'
+    | '/member/history'
+    | '/member/subscription'
+    | '/partner/billing'
+    | '/partner/members'
+    | '/partner/reports'
+    | '/admin/'
+    | '/member/'
+    | '/partner/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  MembersRoute: typeof MembersRoute
-  PartnersRoute: typeof PartnersRoute
-  PlansRoute: typeof PlansRoute
-  ReportsRoute: typeof ReportsRoute
-  SettingsRoute: typeof SettingsRoute
-  SettlementsRoute: typeof SettlementsRoute
-  TransactionsRoute: typeof TransactionsRoute
+  LoginRoute: typeof LoginRoute
+  AdminMembersRoute: typeof AdminMembersRoute
+  AdminPartnersRoute: typeof AdminPartnersRoute
+  AdminPlansRoute: typeof AdminPlansRoute
+  AdminReportsRoute: typeof AdminReportsRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminSettlementsRoute: typeof AdminSettlementsRoute
+  AdminTransactionsRoute: typeof AdminTransactionsRoute
+  MemberHistoryRoute: typeof MemberHistoryRoute
+  MemberSubscriptionRoute: typeof MemberSubscriptionRoute
+  PartnerBillingRoute: typeof PartnerBillingRoute
+  PartnerMembersRoute: typeof PartnerMembersRoute
+  PartnerReportsRoute: typeof PartnerReportsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  MemberIndexRoute: typeof MemberIndexRoute
+  PartnerIndexRoute: typeof PartnerIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/transactions': {
-      id: '/transactions'
-      path: '/transactions'
-      fullPath: '/transactions'
-      preLoaderRoute: typeof TransactionsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/settlements': {
-      id: '/settlements'
-      path: '/settlements'
-      fullPath: '/settlements'
-      preLoaderRoute: typeof SettlementsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/settings': {
-      id: '/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reports': {
-      id: '/reports'
-      path: '/reports'
-      fullPath: '/reports'
-      preLoaderRoute: typeof ReportsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/plans': {
-      id: '/plans'
-      path: '/plans'
-      fullPath: '/plans'
-      preLoaderRoute: typeof PlansRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/partners': {
-      id: '/partners'
-      path: '/partners'
-      fullPath: '/partners'
-      preLoaderRoute: typeof PartnersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/members': {
-      id: '/members'
-      path: '/members'
-      fullPath: '/members'
-      preLoaderRoute: typeof MembersRouteImport
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -192,18 +267,132 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/partner/': {
+      id: '/partner/'
+      path: '/partner'
+      fullPath: '/partner/'
+      preLoaderRoute: typeof PartnerIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/member/': {
+      id: '/member/'
+      path: '/member'
+      fullPath: '/member/'
+      preLoaderRoute: typeof MemberIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partner/reports': {
+      id: '/partner/reports'
+      path: '/partner/reports'
+      fullPath: '/partner/reports'
+      preLoaderRoute: typeof PartnerReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partner/members': {
+      id: '/partner/members'
+      path: '/partner/members'
+      fullPath: '/partner/members'
+      preLoaderRoute: typeof PartnerMembersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partner/billing': {
+      id: '/partner/billing'
+      path: '/partner/billing'
+      fullPath: '/partner/billing'
+      preLoaderRoute: typeof PartnerBillingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/member/subscription': {
+      id: '/member/subscription'
+      path: '/member/subscription'
+      fullPath: '/member/subscription'
+      preLoaderRoute: typeof MemberSubscriptionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/member/history': {
+      id: '/member/history'
+      path: '/member/history'
+      fullPath: '/member/history'
+      preLoaderRoute: typeof MemberHistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/transactions': {
+      id: '/admin/transactions'
+      path: '/admin/transactions'
+      fullPath: '/admin/transactions'
+      preLoaderRoute: typeof AdminTransactionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/settlements': {
+      id: '/admin/settlements'
+      path: '/admin/settlements'
+      fullPath: '/admin/settlements'
+      preLoaderRoute: typeof AdminSettlementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/reports': {
+      id: '/admin/reports'
+      path: '/admin/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AdminReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/plans': {
+      id: '/admin/plans'
+      path: '/admin/plans'
+      fullPath: '/admin/plans'
+      preLoaderRoute: typeof AdminPlansRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/partners': {
+      id: '/admin/partners'
+      path: '/admin/partners'
+      fullPath: '/admin/partners'
+      preLoaderRoute: typeof AdminPartnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/members': {
+      id: '/admin/members'
+      path: '/admin/members'
+      fullPath: '/admin/members'
+      preLoaderRoute: typeof AdminMembersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  MembersRoute: MembersRoute,
-  PartnersRoute: PartnersRoute,
-  PlansRoute: PlansRoute,
-  ReportsRoute: ReportsRoute,
-  SettingsRoute: SettingsRoute,
-  SettlementsRoute: SettlementsRoute,
-  TransactionsRoute: TransactionsRoute,
+  LoginRoute: LoginRoute,
+  AdminMembersRoute: AdminMembersRoute,
+  AdminPartnersRoute: AdminPartnersRoute,
+  AdminPlansRoute: AdminPlansRoute,
+  AdminReportsRoute: AdminReportsRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminSettlementsRoute: AdminSettlementsRoute,
+  AdminTransactionsRoute: AdminTransactionsRoute,
+  MemberHistoryRoute: MemberHistoryRoute,
+  MemberSubscriptionRoute: MemberSubscriptionRoute,
+  PartnerBillingRoute: PartnerBillingRoute,
+  PartnerMembersRoute: PartnerMembersRoute,
+  PartnerReportsRoute: PartnerReportsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  MemberIndexRoute: MemberIndexRoute,
+  PartnerIndexRoute: PartnerIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
