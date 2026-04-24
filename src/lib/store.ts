@@ -197,6 +197,7 @@ export const useStore = create<State>()(
       members: seedMembers,
       transactions: seedTransactions,
       settlements: seedSettlements,
+      inventory: seedInventory,
 
       addPartner: (p) => {
         const partner: Partner = { ...p, id: newId("p"), createdAt: today() };
@@ -222,9 +223,18 @@ export const useStore = create<State>()(
         set({ members: get().members.map((m) => (m.id === id ? { ...m, ...patch } : m)) }),
 
       createTransaction: (t) => {
-        const tx: Transaction = { ...t, id: newId("txn"), createdAt: today() };
+        const nextNo = get().transactions.length + 1;
+        const receiptNo = `RCPT-${String(nextNo).padStart(6, "0")}`;
+        const tx: Transaction = { ...t, id: newId("txn"), receiptNo, createdAt: today() };
+        // Decrement inventory stock for matching barcodes (skip "unlimited" 999 sentinel)
+        const inv = get().inventory.map((inv) => {
+          const used = t.items.find((i) => i.barcode && i.barcode === inv.barcode);
+          if (!used || inv.stock >= 999) return inv;
+          return { ...inv, stock: Math.max(0, inv.stock - used.qty) };
+        });
         set({
           transactions: [tx, ...get().transactions],
+          inventory: inv,
           members: get().members.map((m) =>
             m.id === t.memberId
               ? { ...m, totalSpent: m.totalSpent + t.subtotal, visits: m.visits + 1 }
@@ -233,6 +243,16 @@ export const useStore = create<State>()(
         });
         return tx;
       },
+
+      addInventoryItem: (i) => {
+        const item: InventoryItem = { ...i, id: newId("inv") };
+        set({ inventory: [...get().inventory, item] });
+        return item;
+      },
+      updateInventoryItem: (id, patch) =>
+        set({ inventory: get().inventory.map((i) => (i.id === id ? { ...i, ...patch } : i)) }),
+      deleteInventoryItem: (id) =>
+        set({ inventory: get().inventory.filter((i) => i.id !== id) }),
 
       markSettlementPaid: (id) =>
         set({
@@ -248,6 +268,7 @@ export const useStore = create<State>()(
           members: seedMembers,
           transactions: seedTransactions,
           settlements: seedSettlements,
+          inventory: seedInventory,
         }),
     }),
     { name: "elite-club-store" },
