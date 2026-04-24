@@ -145,20 +145,38 @@ const seedMembers: Member[] = [
 
 const seedTransactions: Transaction[] = [
   {
-    id: "txn-1", memberId: "m-1", memberName: "Rahul Sharma", partnerId: "p-1", partnerName: "The Vault",
+    id: "txn-1", receiptNo: "RCPT-000001", memberId: "m-1", memberName: "Rahul Sharma", partnerId: "p-1", partnerName: "The Vault",
     items: [{ name: "Whiskey", qty: 2, mrp: 3000, cost: 1800 }, { name: "Snacks", qty: 1, mrp: 500, cost: 200 }],
-    subtotal: 3500, profit: 1500, clubShare: 750, partnerShare: 750, paymentMode: "UPI", createdAt: addDays(-1),
+    subtotal: 3500, profit: 1500, clubShare: 750, partnerShare: 750, paymentMode: "UPI", mode: "manual", createdAt: addDays(-1),
   },
   {
-    id: "txn-2", memberId: "m-2", memberName: "Neha Gupta", partnerId: "p-2", partnerName: "Sky Lounge",
+    id: "txn-2", receiptNo: "RCPT-000002", memberId: "m-2", memberName: "Neha Gupta", partnerId: "p-2", partnerName: "Sky Lounge",
     items: [{ name: "Cocktails", qty: 3, mrp: 2400, cost: 1200 }],
-    subtotal: 2400, profit: 1200, clubShare: 600, partnerShare: 600, paymentMode: "Card", createdAt: addDays(-2),
+    subtotal: 2400, profit: 1200, clubShare: 600, partnerShare: 600, paymentMode: "Card", mode: "manual", createdAt: addDays(-2),
   },
   {
-    id: "txn-3", memberId: "m-1", memberName: "Rahul Sharma", partnerId: "p-1", partnerName: "The Vault",
+    id: "txn-3", receiptNo: "RCPT-000003", memberId: "m-1", memberName: "Rahul Sharma", partnerId: "p-1", partnerName: "The Vault",
     items: [{ name: "Wine", qty: 1, mrp: 1800, cost: 900 }],
-    subtotal: 1800, profit: 900, clubShare: 450, partnerShare: 450, paymentMode: "Cash", createdAt: addDays(-5),
+    subtotal: 1800, profit: 900, clubShare: 450, partnerShare: 450, paymentMode: "Cash", mode: "auto", createdAt: addDays(-5),
   },
+];
+
+const seedInventory: InventoryItem[] = [
+  { id: "inv-1", partnerId: "p-1", name: "Glenfiddich 12 Yr", barcode: "5010327000019", category: "Whiskey", mrp: 1800, cost: 1100, stock: 24 },
+  { id: "inv-2", partnerId: "p-1", name: "Jack Daniel's No. 7", barcode: "5099873000017", category: "Whiskey", mrp: 1500, cost: 950, stock: 30 },
+  { id: "inv-3", partnerId: "p-1", name: "Absolut Vodka 60ml", barcode: "7312040017003", category: "Vodka", mrp: 600, cost: 350, stock: 50 },
+  { id: "inv-4", partnerId: "p-1", name: "Bombay Sapphire Gin", barcode: "5010677714006", category: "Gin", mrp: 900, cost: 520, stock: 20 },
+  { id: "inv-5", partnerId: "p-1", name: "Corona Extra Beer", barcode: "7501064191107", category: "Beer", mrp: 350, cost: 180, stock: 80 },
+  { id: "inv-6", partnerId: "p-1", name: "Sula Cabernet 150ml", barcode: "8901030875000", category: "Wine", mrp: 750, cost: 420, stock: 15 },
+  { id: "inv-7", partnerId: "p-1", name: "Mojito Cocktail", barcode: "9999000000017", category: "Cocktail", mrp: 550, cost: 220, stock: 999 },
+  { id: "inv-8", partnerId: "p-1", name: "Mixed Snacks Platter", barcode: "9999000000024", category: "Food", mrp: 450, cost: 200, stock: 999 },
+  { id: "inv-9", partnerId: "p-2", name: "Chivas Regal 18", barcode: "5000299215555", category: "Whiskey", mrp: 2200, cost: 1400, stock: 12 },
+  { id: "inv-10", partnerId: "p-2", name: "Heineken Pint", barcode: "8712000032005", category: "Beer", mrp: 380, cost: 200, stock: 60 },
+  { id: "inv-11", partnerId: "p-2", name: "Long Island Iced Tea", barcode: "9999000000031", category: "Cocktail", mrp: 800, cost: 320, stock: 999 },
+  { id: "inv-12", partnerId: "p-2", name: "Margarita", barcode: "9999000000048", category: "Cocktail", mrp: 700, cost: 280, stock: 999 },
+  { id: "inv-13", partnerId: "p-2", name: "Smirnoff Vodka 60ml", barcode: "5410316440017", category: "Vodka", mrp: 500, cost: 280, stock: 45 },
+  { id: "inv-14", partnerId: "p-2", name: "Red Wine Glass", barcode: "9999000000055", category: "Wine", mrp: 650, cost: 300, stock: 30 },
+  { id: "inv-15", partnerId: "p-2", name: "Nachos Supreme", barcode: "9999000000062", category: "Food", mrp: 400, cost: 170, stock: 999 },
 ];
 
 const seedSettlements: Settlement[] = [
