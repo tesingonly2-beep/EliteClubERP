@@ -18,6 +18,7 @@ import {
   Receipt,
   Home,
   History,
+  Package,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import type { Role } from "@/lib/store";
@@ -36,6 +37,7 @@ const menuByRole: Record<Role, { title: string; to: string; icon: any }[]> = {
   partner: [
     { title: "Dashboard", to: "/partner", icon: LayoutDashboard },
     { title: "Billing", to: "/partner/billing", icon: Receipt },
+    { title: "Inventory", to: "/partner/inventory", icon: Package },
     { title: "Members", to: "/partner/members", icon: UserCheck },
     { title: "Reports", to: "/partner/reports", icon: BarChart3 },
   ],
