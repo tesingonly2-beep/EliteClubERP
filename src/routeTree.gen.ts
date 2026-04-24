@@ -16,6 +16,7 @@ import { Route as MemberIndexRouteImport } from './routes/member/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as PartnerReportsRouteImport } from './routes/partner/reports'
 import { Route as PartnerMembersRouteImport } from './routes/partner/members'
+import { Route as PartnerInventoryRouteImport } from './routes/partner/inventory'
 import { Route as PartnerBillingRouteImport } from './routes/partner/billing'
 import { Route as MemberSubscriptionRouteImport } from './routes/member/subscription'
 import { Route as MemberHistoryRouteImport } from './routes/member/history'
@@ -60,6 +61,11 @@ const PartnerReportsRoute = PartnerReportsRouteImport.update({
 const PartnerMembersRoute = PartnerMembersRouteImport.update({
   id: '/partner/members',
   path: '/partner/members',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnerInventoryRoute = PartnerInventoryRouteImport.update({
+  id: '/partner/inventory',
+  path: '/partner/inventory',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PartnerBillingRoute = PartnerBillingRouteImport.update({
@@ -126,6 +132,7 @@ export interface FileRoutesByFullPath {
   '/member/history': typeof MemberHistoryRoute
   '/member/subscription': typeof MemberSubscriptionRoute
   '/partner/billing': typeof PartnerBillingRoute
+  '/partner/inventory': typeof PartnerInventoryRoute
   '/partner/members': typeof PartnerMembersRoute
   '/partner/reports': typeof PartnerReportsRoute
   '/admin/': typeof AdminIndexRoute
@@ -145,6 +152,7 @@ export interface FileRoutesByTo {
   '/member/history': typeof MemberHistoryRoute
   '/member/subscription': typeof MemberSubscriptionRoute
   '/partner/billing': typeof PartnerBillingRoute
+  '/partner/inventory': typeof PartnerInventoryRoute
   '/partner/members': typeof PartnerMembersRoute
   '/partner/reports': typeof PartnerReportsRoute
   '/admin': typeof AdminIndexRoute
@@ -165,6 +173,7 @@ export interface FileRoutesById {
   '/member/history': typeof MemberHistoryRoute
   '/member/subscription': typeof MemberSubscriptionRoute
   '/partner/billing': typeof PartnerBillingRoute
+  '/partner/inventory': typeof PartnerInventoryRoute
   '/partner/members': typeof PartnerMembersRoute
   '/partner/reports': typeof PartnerReportsRoute
   '/admin/': typeof AdminIndexRoute
@@ -186,6 +195,7 @@ export interface FileRouteTypes {
     | '/member/history'
     | '/member/subscription'
     | '/partner/billing'
+    | '/partner/inventory'
     | '/partner/members'
     | '/partner/reports'
     | '/admin/'
@@ -205,6 +215,7 @@ export interface FileRouteTypes {
     | '/member/history'
     | '/member/subscription'
     | '/partner/billing'
+    | '/partner/inventory'
     | '/partner/members'
     | '/partner/reports'
     | '/admin'
@@ -224,6 +235,7 @@ export interface FileRouteTypes {
     | '/member/history'
     | '/member/subscription'
     | '/partner/billing'
+    | '/partner/inventory'
     | '/partner/members'
     | '/partner/reports'
     | '/admin/'
@@ -244,6 +256,7 @@ export interface RootRouteChildren {
   MemberHistoryRoute: typeof MemberHistoryRoute
   MemberSubscriptionRoute: typeof MemberSubscriptionRoute
   PartnerBillingRoute: typeof PartnerBillingRoute
+  PartnerInventoryRoute: typeof PartnerInventoryRoute
   PartnerMembersRoute: typeof PartnerMembersRoute
   PartnerReportsRoute: typeof PartnerReportsRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -300,6 +313,13 @@ declare module '@tanstack/react-router' {
       path: '/partner/members'
       fullPath: '/partner/members'
       preLoaderRoute: typeof PartnerMembersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partner/inventory': {
+      id: '/partner/inventory'
+      path: '/partner/inventory'
+      fullPath: '/partner/inventory'
+      preLoaderRoute: typeof PartnerInventoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/partner/billing': {
@@ -388,6 +408,7 @@ const rootRouteChildren: RootRouteChildren = {
   MemberHistoryRoute: MemberHistoryRoute,
   MemberSubscriptionRoute: MemberSubscriptionRoute,
   PartnerBillingRoute: PartnerBillingRoute,
+  PartnerInventoryRoute: PartnerInventoryRoute,
   PartnerMembersRoute: PartnerMembersRoute,
   PartnerReportsRoute: PartnerReportsRoute,
   AdminIndexRoute: AdminIndexRoute,
