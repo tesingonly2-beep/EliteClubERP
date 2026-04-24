@@ -24,6 +24,8 @@ export interface Partner {
 
 export type Plan = "Daily" | "Octa" | "Yearly";
 
+export type Gender = "Male" | "Female" | "Other";
+
 export interface Member {
   id: string;
   name: string;
@@ -34,6 +36,16 @@ export interface Member {
   expiry: string; // ISO date
   totalSpent: number;
   visits: number;
+  // Elite profile
+  photo?: string; // data URL or remote URL
+  age?: number;
+  gender?: Gender;
+  dob?: string; // ISO date
+  address?: string;
+  city?: string;
+  occupation?: string;
+  preferredDrink?: string;
+  notes?: string;
 }
 
 export interface BillItem {
@@ -133,14 +145,14 @@ const seedPartners: Partner[] = [
 ];
 
 const seedMembers: Member[] = [
-  { id: "m-1", name: "Rahul Sharma", phone: "+91 98765 43210", email: "rahul@gmail.com", plan: "Yearly", joinedAt: addDays(-100), expiry: addDays(265), totalSpent: 12500, visits: 14 },
-  { id: "m-2", name: "Neha Gupta", phone: "+91 87654 32109", plan: "Octa", joinedAt: addDays(-30), expiry: addDays(5), totalSpent: 8400, visits: 6 },
-  { id: "m-3", name: "Amit Patel", phone: "+91 76543 21098", plan: "Daily", joinedAt: addDays(-1), expiry: addDays(0), totalSpent: 1500, visits: 1 },
-  { id: "m-4", name: "Kavya Nair", phone: "+91 65432 10987", plan: "Yearly", joinedAt: addDays(-400), expiry: addDays(-35), totalSpent: 32000, visits: 28 },
-  { id: "m-5", name: "Vikash Kumar", phone: "+91 54321 09876", plan: "Octa", joinedAt: addDays(-10), expiry: addDays(-2), totalSpent: 5200, visits: 4 },
-  { id: "m-6", name: "Sneha Reddy", phone: "+91 43210 98765", plan: "Yearly", joinedAt: addDays(-60), expiry: addDays(305), totalSpent: 18500, visits: 11 },
-  { id: "m-7", name: "Rohit Joshi", phone: "+91 32109 87654", plan: "Daily", joinedAt: addDays(-3), expiry: addDays(-3), totalSpent: 800, visits: 1 },
-  { id: "m-8", name: "Ananya Singh", phone: "+91 21098 76543", plan: "Octa", joinedAt: addDays(-20), expiry: addDays(210), totalSpent: 6900, visits: 5 },
+  { id: "m-1", name: "Rahul Sharma", phone: "+91 98765 43210", email: "rahul@gmail.com", plan: "Yearly", joinedAt: addDays(-100), expiry: addDays(265), totalSpent: 12500, visits: 14, age: 32, gender: "Male", dob: "1992-06-14", address: "14 Marine Drive, Apt 7B", city: "Mumbai", occupation: "Investment Banker", preferredDrink: "Single Malt Whiskey", notes: "VIP — prefers corner booth. Allergic to shellfish.", photo: "https://i.pravatar.cc/300?img=12" },
+  { id: "m-2", name: "Neha Gupta", phone: "+91 87654 32109", plan: "Octa", joinedAt: addDays(-30), expiry: addDays(5), totalSpent: 8400, visits: 6, age: 28, gender: "Female", dob: "1996-03-22", address: "Greater Kailash II", city: "Delhi", occupation: "Fashion Designer", preferredDrink: "Espresso Martini", notes: "Often books for 4. Birthday on file.", photo: "https://i.pravatar.cc/300?img=47" },
+  { id: "m-3", name: "Amit Patel", phone: "+91 76543 21098", plan: "Daily", joinedAt: addDays(-1), expiry: addDays(0), totalSpent: 1500, visits: 1, age: 35, gender: "Male", dob: "1989-11-02", address: "Satellite Road", city: "Ahmedabad", occupation: "Entrepreneur", preferredDrink: "Old Fashioned", photo: "https://i.pravatar.cc/300?img=33" },
+  { id: "m-4", name: "Kavya Nair", phone: "+91 65432 10987", plan: "Yearly", joinedAt: addDays(-400), expiry: addDays(-35), totalSpent: 32000, visits: 28, age: 41, gender: "Female", dob: "1983-09-18", address: "Indiranagar 12th Main", city: "Bangalore", occupation: "CEO, NairTech", preferredDrink: "Negroni", notes: "Founding tier member. Renewal pending.", photo: "https://i.pravatar.cc/300?img=44" },
+  { id: "m-5", name: "Vikash Kumar", phone: "+91 54321 09876", plan: "Octa", joinedAt: addDays(-10), expiry: addDays(-2), totalSpent: 5200, visits: 4, age: 30, gender: "Male", dob: "1994-07-05", address: "Sector 50", city: "Noida", occupation: "Software Architect", preferredDrink: "Craft Beer", photo: "https://i.pravatar.cc/300?img=15" },
+  { id: "m-6", name: "Sneha Reddy", phone: "+91 43210 98765", plan: "Yearly", joinedAt: addDays(-60), expiry: addDays(305), totalSpent: 18500, visits: 11, age: 27, gender: "Female", dob: "1997-12-09", address: "Banjara Hills Rd 12", city: "Hyderabad", occupation: "Surgeon", preferredDrink: "Champagne", notes: "Prefers quiet seating.", photo: "https://i.pravatar.cc/300?img=49" },
+  { id: "m-7", name: "Rohit Joshi", phone: "+91 32109 87654", plan: "Daily", joinedAt: addDays(-3), expiry: addDays(-3), totalSpent: 800, visits: 1, age: 24, gender: "Male", dob: "2000-01-30", address: "Koregaon Park", city: "Pune", occupation: "Photographer", preferredDrink: "Mojito", photo: "https://i.pravatar.cc/300?img=68" },
+  { id: "m-8", name: "Ananya Singh", phone: "+91 21098 76543", plan: "Octa", joinedAt: addDays(-20), expiry: addDays(210), totalSpent: 6900, visits: 5, age: 29, gender: "Female", dob: "1995-05-11", address: "Salt Lake Sector V", city: "Kolkata", occupation: "Lawyer", preferredDrink: "Gin & Tonic", photo: "https://i.pravatar.cc/300?img=45" },
 ];
 
 const seedTransactions: Transaction[] = [
