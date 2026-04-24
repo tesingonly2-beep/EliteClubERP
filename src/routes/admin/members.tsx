@@ -76,6 +76,7 @@ function MembersPage() {
                   <th className="pb-3 text-right font-medium text-muted-foreground">Visits</th>
                   <th className="pb-3 text-right font-medium text-muted-foreground">Spent</th>
                   <th className="pb-3 text-center font-medium text-muted-foreground">Status</th>
+                  <th className="pb-3 text-right font-medium text-muted-foreground">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -92,11 +93,19 @@ function MembersPage() {
                       <td className="py-3 text-center">
                         <span className={expired ? "status-inactive" : "status-active"}>{expired ? "Expired" : "Active"}</span>
                       </td>
+                      <td className="py-3 text-right">
+                        <button
+                          onClick={() => setSelected(m)}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-gold/40 bg-gold-muted px-3 py-1.5 text-xs font-semibold text-gold hover:bg-gold hover:text-gold-foreground transition-all"
+                        >
+                          <Eye className="h-3.5 w-3.5" /> View
+                        </button>
+                      </td>
                     </tr>
                   );
                 })}
                 {filtered.length === 0 && (
-                  <tr><td colSpan={7} className="py-8 text-center text-muted-foreground">No members found</td></tr>
+                  <tr><td colSpan={8} className="py-8 text-center text-muted-foreground">No members found</td></tr>
                 )}
               </tbody>
             </table>
