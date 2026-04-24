@@ -134,6 +134,11 @@ function MembersPage() {
           </div>
         )}
       </div>
+
+      {selected && (() => {
+        const live = members.find((m) => m.id === selected.id);
+        return live ? <MemberProfileModal member={live} onClose={() => setSelected(null)} editable /> : null;
+      })()}
     </DashboardLayout>
   );
 }
