@@ -41,10 +41,23 @@ export interface BillItem {
   qty: number;
   mrp: number; // total price charged to member
   cost: number; // partner cost
+  barcode?: string;
+}
+
+export interface InventoryItem {
+  id: string;
+  partnerId: string;
+  name: string;
+  barcode: string;
+  category: string;
+  mrp: number; // per unit price charged to member
+  cost: number; // per unit partner cost
+  stock: number;
 }
 
 export interface Transaction {
   id: string;
+  receiptNo: string;
   memberId: string;
   memberName: string;
   partnerId: string;
@@ -55,6 +68,7 @@ export interface Transaction {
   clubShare: number;
   partnerShare: number;
   paymentMode: "Cash" | "UPI" | "Card";
+  mode: "auto" | "manual";
   createdAt: string; // ISO datetime
 }
 
@@ -73,6 +87,7 @@ interface State {
   members: Member[];
   transactions: Transaction[];
   settlements: Settlement[];
+  inventory: InventoryItem[];
 
   // mutations
   addPartner: (p: Omit<Partner, "id" | "createdAt">) => Partner;
@@ -82,7 +97,11 @@ interface State {
   addMember: (m: Omit<Member, "id" | "joinedAt" | "totalSpent" | "visits">) => Member;
   updateMember: (id: string, patch: Partial<Member>) => void;
 
-  createTransaction: (t: Omit<Transaction, "id" | "createdAt">) => Transaction;
+  createTransaction: (t: Omit<Transaction, "id" | "createdAt" | "receiptNo">) => Transaction;
+
+  addInventoryItem: (i: Omit<InventoryItem, "id">) => InventoryItem;
+  updateInventoryItem: (id: string, patch: Partial<InventoryItem>) => void;
+  deleteInventoryItem: (id: string) => void;
 
   markSettlementPaid: (id: string) => void;
   resetData: () => void;
