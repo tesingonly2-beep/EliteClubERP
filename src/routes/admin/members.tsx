@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { useState } from "react";
-import { Search, Filter, Plus, X } from "lucide-react";
-import { useStore, isExpired, type Plan, PLAN_DAYS } from "@/lib/store";
+import { Search, Filter, Plus, X, Eye } from "lucide-react";
+import { useStore, isExpired, type Member, type Plan, PLAN_DAYS } from "@/lib/store";
+import { MemberProfileModal } from "@/components/MemberProfileModal";
 
 export const Route = createFileRoute("/admin/members")({
   component: MembersPage,
@@ -14,6 +15,7 @@ function MembersPage() {
   const [search, setSearch] = useState("");
   const [planFilter, setPlanFilter] = useState<"All" | Plan>("All");
   const [showAdd, setShowAdd] = useState(false);
+  const [selected, setSelected] = useState<Member | null>(null);
   const [form, setForm] = useState({ name: "", phone: "", email: "", plan: "Daily" as Plan });
 
   const filtered = members.filter((m) => {
