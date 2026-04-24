@@ -182,29 +182,33 @@ function BillingPage() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
+        {/* Header */}
         <div className="flex items-start justify-between flex-wrap gap-4">
           <div>
-            <h1 className="font-display text-3xl font-bold text-foreground">Billing</h1>
+            <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-gold font-semibold">
+              <span className="h-px w-8 bg-gold/60" /> Point of Sale
+            </div>
+            <h1 className="font-display text-3xl font-bold text-foreground mt-1">Billing Console</h1>
             <p className="text-sm text-muted-foreground mt-1">
-              Generate bills for members at {partner?.name}.
+              Generating bills at <span className="text-foreground font-medium">{partner?.name}</span>
             </p>
           </div>
 
           {/* Mode toggle */}
-          <div className="inline-flex rounded-xl border border-border bg-background/50 p-1">
+          <div className="inline-flex rounded-xl border border-border bg-background/60 p-1 shadow-sm">
             <button
               onClick={() => setMode("auto")}
               className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all ${
-                mode === "auto" ? "bg-gold text-gold-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                mode === "auto" ? "bg-gold text-gold-foreground shadow-md gold-glow" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               <ScanLine className="h-4 w-4" />
-              Automatic (Scanner)
+              Scanner
             </button>
             <button
               onClick={() => setMode("manual")}
               className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all ${
-                mode === "manual" ? "bg-gold text-gold-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                mode === "manual" ? "bg-gold text-gold-foreground shadow-md gold-glow" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               <Hand className="h-4 w-4" />
@@ -215,8 +219,8 @@ function BillingPage() {
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {/* LEFT: Member */}
-          <div className="glass-panel p-5 space-y-4">
-            <h3 className="font-display text-lg font-semibold">1. Select Member</h3>
+          <div className="glass-panel p-5 space-y-5">
+            <SectionHeader n={1} title="Select Member" />
             <div className="relative">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <input
@@ -231,49 +235,50 @@ function BillingPage() {
             </div>
 
             {!member && search && matchedMembers.length > 0 && (
-              <div className="space-y-1">
-                {matchedMembers.map((m) => (
-                  <button
-                    key={m.id}
-                    onClick={() => {
-                      setMember(m);
-                      setSearch("");
-                    }}
-                    className="w-full text-left rounded-lg p-2 hover:bg-accent transition-colors"
-                  >
-                    <p className="text-sm font-medium">{m.name}</p>
-                    <p className="text-xs text-muted-foreground">{m.phone}</p>
-                  </button>
-                ))}
+              <div className="space-y-1 rounded-lg border border-border/60 bg-background/40 p-1">
+                {matchedMembers.map((m) => {
+                  const initials = m.name.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase();
+                  return (
+                    <button
+                      key={m.id}
+                      onClick={() => {
+                        setMember(m);
+                        setSearch("");
+                      }}
+                      className="w-full flex items-center gap-3 text-left rounded-md p-2 hover:bg-accent transition-colors"
+                    >
+                      <div className="h-8 w-8 rounded-full bg-gold-muted overflow-hidden flex items-center justify-center text-[10px] font-bold text-gold shrink-0">
+                        {m.photo ? <img src={m.photo} alt="" className="h-full w-full object-cover" /> : initials}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium truncate">{m.name}</p>
+                        <p className="text-xs text-muted-foreground">{m.phone}</p>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
             )}
 
             {member && (
-              <div className="rounded-lg bg-background/50 p-4 space-y-3">
+              <div className="rounded-xl border border-gold/30 bg-gradient-to-br from-gold-muted to-transparent p-4 space-y-3">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold-muted">
-                    <User className="h-6 w-6 text-gold" />
+                  <div className="h-14 w-14 rounded-full bg-gold-muted overflow-hidden flex items-center justify-center text-gold border-2 border-gold/40">
+                    {member.photo ? (
+                      <img src={member.photo} alt={member.name} className="h-full w-full object-cover" />
+                    ) : (
+                      <User className="h-6 w-6" />
+                    )}
                   </div>
-                  <div className="flex-1">
-                    <p className="font-semibold text-foreground">{member.name}</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-foreground truncate">{member.name}</p>
                     <p className="text-xs text-muted-foreground">{member.phone}</p>
                   </div>
                 </div>
-                <div className="space-y-1.5 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Plan</span>
-                    <span className="text-gold font-medium">{member.plan}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Expiry</span>
-                    <span className="text-foreground">{new Date(member.expiry).toLocaleDateString("en-IN")}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Status</span>
-                    <span className={expired ? "status-inactive" : "status-active"}>
-                      {expired ? "Expired" : `${daysUntil(member.expiry)}d left`}
-                    </span>
-                  </div>
+                <div className="grid grid-cols-3 gap-2 text-center">
+                  <MiniStat label="Plan" value={member.plan} />
+                  <MiniStat label="Visits" value={String(member.visits)} />
+                  <MiniStat label="Status" value={expired ? "Expired" : `${daysUntil(member.expiry)}d`} danger={expired} />
                 </div>
                 {expired && (
                   <div className="rounded-lg bg-destructive/10 border border-destructive/30 p-3 flex items-center gap-2">
@@ -288,21 +293,19 @@ function BillingPage() {
                   }}
                   className="w-full text-xs text-muted-foreground hover:text-foreground"
                 >
-                  Clear
+                  Clear selection
                 </button>
               </div>
             )}
 
             {/* Scanner / Manual picker */}
-            <div className="pt-2 border-t border-border space-y-3">
-              <h4 className="text-sm font-semibold text-foreground">
-                2. {mode === "auto" ? "Scan Items" : "Pick Items"}
-              </h4>
+            <div className="pt-3 border-t border-border/60 space-y-3">
+              <SectionHeader n={2} title={mode === "auto" ? "Scan Items" : "Pick Items"} />
 
               {mode === "auto" ? (
                 <>
                   <div className="relative">
-                    <ScanLine className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gold" />
+                    <ScanLine className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gold animate-pulse" />
                     <input
                       ref={scannerRef}
                       value={barcodeInput}
@@ -315,24 +318,23 @@ function BillingPage() {
                       }}
                       placeholder={canBill ? "Waiting for scanner…" : "Select member first"}
                       disabled={!canBill}
-                      className="h-10 w-full rounded-lg border border-gold/40 bg-background pl-9 pr-4 text-sm font-mono focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold disabled:opacity-40"
+                      className="h-11 w-full rounded-lg border-2 border-gold/40 bg-background pl-9 pr-4 text-sm font-mono focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 disabled:opacity-40"
                     />
                   </div>
                   <p className="text-[10px] text-muted-foreground">
                     USB barcode scanners type the code + Enter automatically.
                   </p>
-                  {/* Quick-scan demo buttons */}
-                  <div className="space-y-1.5 max-h-64 overflow-y-auto">
+                  <div className="space-y-1.5 max-h-64 overflow-y-auto pr-1">
                     <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Quick-scan (demo)</p>
                     {partnerInventory.slice(0, 8).map((i) => (
                       <button
                         key={i.id}
                         disabled={!canBill}
                         onClick={() => handleScan(i.barcode)}
-                        className="w-full text-left rounded-md border border-border bg-background/50 px-3 py-1.5 text-xs hover:border-gold/40 hover:bg-gold/5 disabled:opacity-30 flex items-center justify-between"
+                        className="w-full text-left rounded-md border border-border bg-background/50 px-3 py-2 text-xs hover:border-gold/40 hover:bg-gold/5 disabled:opacity-30 flex items-center justify-between transition-colors"
                       >
                         <span className="truncate">{i.name}</span>
-                        <span className="text-muted-foreground font-mono ml-2">{formatINR(i.mrp)}</span>
+                        <span className="text-gold font-semibold ml-2">{formatINR(i.mrp)}</span>
                       </button>
                     ))}
                   </div>
@@ -349,7 +351,7 @@ function BillingPage() {
                       className="h-10 w-full rounded-lg border border-input bg-background pl-9 pr-4 text-sm focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold disabled:opacity-40"
                     />
                   </div>
-                  <div className="space-y-1.5 max-h-72 overflow-y-auto">
+                  <div className="space-y-1.5 max-h-72 overflow-y-auto pr-1">
                     {filteredManual.length === 0 && (
                       <p className="text-xs text-muted-foreground text-center py-4">No items match</p>
                     )}
@@ -358,14 +360,14 @@ function BillingPage() {
                         key={i.id}
                         disabled={!canBill}
                         onClick={() => addInventoryToCart(i, 1)}
-                        className="w-full rounded-md border border-border bg-background/50 px-3 py-2 text-left hover:border-gold/40 hover:bg-gold/5 disabled:opacity-30"
+                        className="w-full rounded-lg border border-border bg-background/50 px-3 py-2 text-left hover:border-gold/40 hover:bg-gold/5 disabled:opacity-30 transition-colors"
                       >
                         <div className="flex items-center justify-between">
                           <span className="text-sm font-medium text-foreground truncate">{i.name}</span>
                           <span className="text-xs text-gold font-semibold ml-2">{formatINR(i.mrp)}</span>
                         </div>
                         <div className="flex items-center justify-between text-[10px] text-muted-foreground mt-0.5">
-                          <span>{i.category}</span>
+                          <span className="rounded bg-accent/50 px-1.5 py-0.5">{i.category}</span>
                           <span>Stock: {i.stock >= 999 ? "∞" : i.stock}</span>
                         </div>
                       </button>
@@ -380,46 +382,59 @@ function BillingPage() {
           <div className="glass-panel p-5 space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="font-display text-lg font-semibold flex items-center gap-2">
-                <ShoppingCart className="h-5 w-5" /> Receipt
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gold-muted text-gold">
+                  <ShoppingCart className="h-4 w-4" />
+                </span>
+                Current Bill
               </h3>
               {lines.length > 0 && (
-                <span className="text-xs text-muted-foreground">{lines.length} item{lines.length > 1 ? "s" : ""}</span>
+                <span className="rounded-full bg-gold-muted px-2.5 py-0.5 text-xs font-semibold text-gold">
+                  {lines.length} item{lines.length > 1 ? "s" : ""}
+                </span>
               )}
             </div>
 
-            <div className="space-y-1 min-h-[20rem] max-h-[28rem] overflow-y-auto">
+            <div className="space-y-2 min-h-[20rem] max-h-[34rem] overflow-y-auto pr-1">
               {lines.length === 0 && (
-                <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
-                  <ShoppingCart className="h-10 w-10 mb-2 opacity-30" />
-                  <p className="text-sm">No items yet</p>
+                <div className="flex flex-col items-center justify-center py-20 text-muted-foreground">
+                  <div className="h-16 w-16 rounded-full bg-gold-muted/40 flex items-center justify-center mb-3">
+                    <ShoppingCart className="h-7 w-7 opacity-40" />
+                  </div>
+                  <p className="text-sm font-medium">No items yet</p>
                   <p className="text-xs mt-1">{mode === "auto" ? "Scan a bottle to add" : "Pick items from the catalog"}</p>
                 </div>
               )}
               {lines.map((it, idx) => (
-                <div key={idx} className="rounded-lg border border-border/50 bg-background/30 p-3 space-y-2">
+                <div
+                  key={idx}
+                  className="rounded-xl border border-border/60 bg-gradient-to-r from-background/60 to-background/20 p-3 space-y-2 hover:border-gold/30 transition-colors"
+                >
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-foreground truncate">{it.name}</p>
+                      <p className="text-sm font-semibold text-foreground truncate">{it.name}</p>
                       {it.barcode && (
                         <p className="text-[10px] text-muted-foreground font-mono">{it.barcode}</p>
                       )}
-                      <p className="text-[10px] text-muted-foreground">{formatINR(it.unitMrp)} × {it.qty}</p>
+                      <p className="text-[10px] text-muted-foreground mt-0.5">{formatINR(it.unitMrp)} per unit</p>
                     </div>
-                    <button onClick={() => removeLine(idx)} className="text-muted-foreground hover:text-destructive">
+                    <button
+                      onClick={() => removeLine(idx)}
+                      className="text-muted-foreground hover:text-destructive p-1 rounded hover:bg-destructive/10"
+                    >
                       <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
                   <div className="flex items-center justify-between">
-                    <div className="inline-flex items-center rounded-md border border-border">
-                      <button onClick={() => updateQty(idx, -1)} className="h-7 w-7 flex items-center justify-center hover:bg-accent">
-                        <Minus className="h-3 w-3" />
+                    <div className="inline-flex items-center rounded-lg border border-border bg-background overflow-hidden">
+                      <button onClick={() => updateQty(idx, -1)} className="h-8 w-8 flex items-center justify-center hover:bg-accent transition-colors">
+                        <Minus className="h-3.5 w-3.5" />
                       </button>
-                      <span className="w-8 text-center text-sm font-medium">{it.qty}</span>
-                      <button onClick={() => updateQty(idx, 1)} className="h-7 w-7 flex items-center justify-center hover:bg-accent">
-                        <Plus className="h-3 w-3" />
+                      <span className="w-9 text-center text-sm font-semibold border-x border-border">{it.qty}</span>
+                      <button onClick={() => updateQty(idx, 1)} className="h-8 w-8 flex items-center justify-center hover:bg-accent transition-colors">
+                        <Plus className="h-3.5 w-3.5" />
                       </button>
                     </div>
-                    <span className="text-sm font-semibold text-foreground">{formatINR(it.mrp)}</span>
+                    <span className="text-base font-bold text-gold font-display">{formatINR(it.mrp)}</span>
                   </div>
                 </div>
               ))}
@@ -427,8 +442,9 @@ function BillingPage() {
           </div>
 
           {/* RIGHT: Summary */}
-          <div className="glass-panel p-5 space-y-4">
-            <h3 className="font-display text-lg font-semibold">3. Summary</h3>
+          <div className="glass-panel p-5 space-y-5 self-start lg:sticky lg:top-4">
+            <SectionHeader n={3} title="Summary" />
+
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Subtotal</span>
@@ -438,7 +454,7 @@ function BillingPage() {
                 <span className="text-muted-foreground">Profit</span>
                 <span className="font-semibold text-gold">{formatINR(profit)}</span>
               </div>
-              <div className="border-t border-border pt-3 space-y-2">
+              <div className="border-t border-dashed border-border pt-3 space-y-2 text-xs">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Club Share (50%)</span>
                   <span className="text-foreground">{formatINR(clubShare)}</span>
@@ -450,17 +466,23 @@ function BillingPage() {
               </div>
             </div>
 
+            {/* Total */}
+            <div className="rounded-xl bg-gradient-to-br from-gold/30 via-gold-muted to-transparent border border-gold/40 p-4">
+              <p className="text-[10px] uppercase tracking-wider text-gold font-semibold">Total Payable</p>
+              <p className="font-display text-3xl font-bold text-foreground mt-1">{formatINR(subtotal)}</p>
+            </div>
+
             <div className="space-y-2">
-              <p className="text-xs text-muted-foreground uppercase tracking-wider">Payment Mode</p>
+              <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Payment Mode</p>
               <div className="grid grid-cols-3 gap-2">
                 {(["Cash", "UPI", "Card"] as const).map((m) => (
                   <button
                     key={m}
                     onClick={() => setPaymentMode(m)}
-                    className={`rounded-lg border px-2 py-2 text-xs font-medium transition-all ${
+                    className={`rounded-lg border-2 px-2 py-2.5 text-xs font-semibold transition-all ${
                       paymentMode === m
-                        ? "border-gold bg-gold-muted text-gold"
-                        : "border-border bg-background/50 text-muted-foreground"
+                        ? "border-gold bg-gold-muted text-gold shadow-sm"
+                        : "border-border bg-background/50 text-muted-foreground hover:border-gold/40"
                     }`}
                   >
                     {m}
@@ -472,9 +494,9 @@ function BillingPage() {
             <button
               onClick={generateBill}
               disabled={!member || expired || lines.length === 0}
-              className="h-11 w-full rounded-lg bg-gold text-gold-foreground font-semibold hover:opacity-90 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="h-12 w-full rounded-xl bg-gold text-gold-foreground font-bold hover:opacity-90 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg gold-glow transition-all"
             >
-              <Check className="h-4 w-4" /> Pay & Generate Receipt
+              <Check className="h-5 w-5" /> Pay & Generate Receipt
             </button>
             <p className="text-[10px] text-muted-foreground text-center">
               Profit auto-calculated. Bills cannot be deleted once generated.
@@ -486,6 +508,26 @@ function BillingPage() {
       {/* RECEIPT MODAL */}
       {receipt && <ReceiptModal tx={receipt} partner={partner?.name ?? ""} onClose={newBill} />}
     </DashboardLayout>
+  );
+}
+
+function SectionHeader({ n, title }: { n: number; title: string }) {
+  return (
+    <div className="flex items-center gap-2.5">
+      <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gold text-gold-foreground text-xs font-bold font-display">
+        {n}
+      </span>
+      <h3 className="font-display text-lg font-semibold text-foreground">{title}</h3>
+    </div>
+  );
+}
+
+function MiniStat({ label, value, danger }: { label: string; value: string; danger?: boolean }) {
+  return (
+    <div className="rounded-lg bg-background/60 px-2 py-1.5">
+      <p className="text-[9px] uppercase tracking-wider text-muted-foreground">{label}</p>
+      <p className={`text-xs font-bold mt-0.5 ${danger ? "text-destructive" : "text-foreground"}`}>{value}</p>
+    </div>
   );
 }
 
