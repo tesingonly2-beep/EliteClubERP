@@ -11,10 +11,8 @@ import {
   BarChart3,
   Settings,
   Search,
-  Bell,
   ChevronLeft,
   Crown,
-  LogOut,
   Receipt,
   Home,
   History,
@@ -22,6 +20,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import type { Role } from "@/lib/store";
+import { HeaderActions } from "@/components/HeaderActions";
 
 const menuByRole: Record<Role, { title: string; to: string; icon: any }[]> = {
   superadmin: [
