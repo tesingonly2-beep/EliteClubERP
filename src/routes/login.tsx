@@ -15,8 +15,9 @@ export const Route = createFileRoute("/login")({
   }),
 });
 
+// Superadmin is intentionally hidden from the public login.
+// Access via /login?role=superadmin or directly visit /admin after seeding the user.
 const ROLES: { value: Role; label: string; demo: string; desc: string }[] = [
-  { value: "superadmin", label: "Superadmin", demo: "super@elite.club", desc: "Club owner — full control" },
   { value: "partner", label: "Partner Admin", demo: "raj@thevault.com", desc: "Bar/lounge owner — billing & members" },
   { value: "member", label: "Member", demo: "rahul@gmail.com", desc: "Customer — view card & history" },
 ];
@@ -24,8 +25,10 @@ const ROLES: { value: Role; label: string; demo: string; desc: string }[] = [
 function LoginPage() {
   const navigate = useNavigate();
   const { user, login } = useAuth();
-  const [role, setRole] = useState<Role>("superadmin");
-  const [email, setEmail] = useState("super@elite.club");
+  const search = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
+  const isSuperRoute = search.get("role") === "superadmin";
+  const [role, setRole] = useState<Role>(isSuperRoute ? "superadmin" : "partner");
+  const [email, setEmail] = useState(isSuperRoute ? "super@elite.club" : "raj@thevault.com");
   const [password, setPassword] = useState("demo");
   const [error, setError] = useState("");
 
