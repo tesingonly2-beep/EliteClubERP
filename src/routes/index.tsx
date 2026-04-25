@@ -4,7 +4,6 @@ import {
   Crown, ArrowRight, Sparkles, MapPin, Wine, ShieldCheck, QrCode,
   Star, Check, Mail,
 } from "lucide-react";
-import { useAuth, rolePath } from "@/lib/auth";
 import { useStore, formatINR, PLAN_PRICES } from "@/lib/store";
 import heroImg from "@/assets/landing-hero.jpg";
 
@@ -21,7 +20,6 @@ export const Route = createFileRoute("/")({
 });
 
 function Landing() {
-  const { user } = useAuth();
   const { partners } = useStore();
 
   const activePartners = partners.filter((p) => p.status === "Active");
