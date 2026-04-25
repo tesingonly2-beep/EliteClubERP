@@ -60,12 +60,6 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   if (!user) return null;
 
   const items = menuByRole[user.role];
-  const initials = user.name.split(" ").map((s) => s[0]).slice(0, 2).join("");
-
-  const handleLogout = () => {
-    logout();
-    navigate({ to: "/login" });
-  };
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
