@@ -131,6 +131,15 @@ function InventoryPage() {
 
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
+              <colgroup>
+                <col />
+                <col className="w-40" />
+                <col className="w-28" />
+                <col className="w-24" />
+                <col className="w-24" />
+                <col className="w-20" />
+                <col className="w-20" />
+              </colgroup>
               <thead>
                 <tr className="text-left text-xs uppercase tracking-wider text-muted-foreground border-b border-border">
                   <th className="py-3 px-2">Item</th>
@@ -154,14 +163,22 @@ function InventoryPage() {
                 {items.map((i) => (
                   <tr key={i.id} className="border-b border-border/40 hover:bg-accent/30">
                     <td className="py-3 px-2 font-medium text-foreground">{i.name}</td>
-                    <td className="py-3 px-2 text-xs text-muted-foreground font-mono">{i.barcode}</td>
+                    <td className="py-3 px-2 text-xs text-muted-foreground font-mono truncate">{i.barcode}</td>
                     <td className="py-3 px-2">
-                      <span className="rounded-md bg-gold-muted text-gold text-xs px-2 py-0.5">{i.category}</span>
+                      <span className="rounded-md bg-gold-muted text-gold text-[11px] px-2 py-0.5 whitespace-nowrap">{i.category}</span>
                     </td>
-                    <td className="py-3 px-2 text-right text-foreground">{formatINR(i.mrp)}</td>
-                    <td className="py-3 px-2 text-right text-muted-foreground">{formatINR(i.cost)}</td>
-                    <td className="py-3 px-2 text-right">
-                      <span className={i.stock < 5 ? "text-destructive font-semibold" : i.stock >= 999 ? "text-muted-foreground" : "text-foreground"}>
+                    <td className="py-3 px-2 text-right text-foreground tabular-nums">{formatINR(i.mrp)}</td>
+                    <td className="py-3 px-2 text-right text-muted-foreground tabular-nums">{formatINR(i.cost)}</td>
+                    <td className="py-3 px-2 text-right tabular-nums">
+                      <span
+                        className={`inline-flex min-w-[2.5rem] justify-center rounded-md px-1.5 py-0.5 text-xs font-semibold ${
+                          i.stock < 5
+                            ? "bg-destructive/15 text-destructive"
+                            : i.stock >= 999
+                              ? "bg-secondary text-muted-foreground"
+                              : "bg-accent/40 text-foreground"
+                        }`}
+                      >
                         {i.stock >= 999 ? "∞" : i.stock}
                       </span>
                     </td>
