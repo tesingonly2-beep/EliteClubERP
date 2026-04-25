@@ -20,6 +20,10 @@ export interface Partner {
   location: string;
   status: "Active" | "Inactive";
   createdAt: string;
+  photo?: string;
+  hours?: string; // e.g. "5 PM – 1 AM"
+  cuisine?: string; // e.g. "Cocktail Bar · Lounge"
+  rating?: number; // 0-5
 }
 
 export type Plan = "Daily" | "Octa" | "Yearly";
@@ -137,11 +141,11 @@ const seedUsers: User[] = [
 ];
 
 const seedPartners: Partner[] = [
-  { id: "p-1", name: "The Vault", owner: "Raj Malhotra", location: "Mumbai", status: "Active", createdAt: addDays(-180) },
-  { id: "p-2", name: "Sky Lounge", owner: "Priya Sharma", location: "Delhi", status: "Active", createdAt: addDays(-150) },
-  { id: "p-3", name: "Noir Bar", owner: "Vikram Singh", location: "Bangalore", status: "Active", createdAt: addDays(-120) },
-  { id: "p-4", name: "Amber Club", owner: "Aisha Khan", location: "Pune", status: "Inactive", createdAt: addDays(-90) },
-  { id: "p-5", name: "Eclipse", owner: "Arjun Patel", location: "Hyderabad", status: "Active", createdAt: addDays(-60) },
+  { id: "p-1", name: "The Vault", owner: "Raj Malhotra", location: "Bandra West, Mumbai", status: "Active", createdAt: addDays(-180), photo: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800&q=80&auto=format&fit=crop", hours: "6 PM – 1:30 AM", cuisine: "Speakeasy · Whiskey Bar", rating: 4.8 },
+  { id: "p-2", name: "Sky Lounge", owner: "Priya Sharma", location: "Connaught Place, Delhi", status: "Active", createdAt: addDays(-150), photo: "https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=800&q=80&auto=format&fit=crop", hours: "5 PM – 1 AM", cuisine: "Rooftop · Cocktail Bar", rating: 4.7 },
+  { id: "p-3", name: "Noir Bar", owner: "Vikram Singh", location: "Indiranagar, Bangalore", status: "Active", createdAt: addDays(-120), photo: "https://images.unsplash.com/photo-1543007630-9710e4a00a20?w=800&q=80&auto=format&fit=crop", hours: "7 PM – 2 AM", cuisine: "Jazz Lounge", rating: 4.6 },
+  { id: "p-4", name: "Amber Club", owner: "Aisha Khan", location: "Koregaon Park, Pune", status: "Inactive", createdAt: addDays(-90), photo: "https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=800&q=80&auto=format&fit=crop", hours: "8 PM – 3 AM", cuisine: "Nightclub", rating: 4.4 },
+  { id: "p-5", name: "Eclipse", owner: "Arjun Patel", location: "Banjara Hills, Hyderabad", status: "Active", createdAt: addDays(-60), photo: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=800&q=80&auto=format&fit=crop", hours: "6 PM – 2 AM", cuisine: "Wine Bar · Lounge", rating: 4.5 },
 ];
 
 const seedMembers: Member[] = [
