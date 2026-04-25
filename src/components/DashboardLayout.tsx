@@ -51,7 +51,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
 
   useEffect(() => {
     if (!user) navigate({ to: "/login" });
