@@ -1,11 +1,9 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
   Crown, ArrowRight, Sparkles, MapPin, Wine, ShieldCheck, QrCode,
   Star, Check, Mail,
 } from "lucide-react";
-import { useAuth, rolePath } from "@/lib/auth";
 import { useStore, formatINR, PLAN_PRICES } from "@/lib/store";
 import heroImg from "@/assets/landing-hero.jpg";
 
@@ -22,15 +20,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Landing() {
-  const { user } = useAuth();
-  const navigate = useNavigate();
   const { partners } = useStore();
-
-  useEffect(() => {
-    if (user) navigate({ to: rolePath(user.role) });
-  }, [user, navigate]);
-
-  if (user) return null;
 
   const activePartners = partners.filter((p) => p.status === "Active");
 
