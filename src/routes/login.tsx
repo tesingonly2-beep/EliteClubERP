@@ -38,7 +38,8 @@ function LoginPage() {
 
   const handleRoleChange = (r: Role) => {
     setRole(r);
-    setEmail(ROLES.find((x) => x.value === r)!.demo);
+    const found = ROLES.find((x) => x.value === r);
+    if (found) setEmail(found.demo);
     setError("");
   };
 
@@ -81,29 +82,37 @@ function LoginPage() {
             <p className="text-sm text-muted-foreground mt-1">Sign in to your account</p>
           </div>
 
-          {/* Role selector */}
-          <div className="mb-6">
-            <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2 block">Account Type</label>
-            <div className="grid grid-cols-3 gap-2">
-              {ROLES.map((r) => (
-                <button
-                  key={r.value}
-                  type="button"
-                  onClick={() => handleRoleChange(r.value)}
-                  className={`rounded-lg border px-2 py-2 text-xs font-medium transition-all ${
-                    role === r.value
-                      ? "border-gold bg-gold-muted text-gold"
-                      : "border-border bg-background/50 text-muted-foreground hover:border-gold/40"
-                  }`}
-                >
-                  {r.label}
-                </button>
-              ))}
+          {/* Role selector — hidden when arriving via /login?role=superadmin */}
+          {!isSuperRoute && (
+            <div className="mb-6">
+              <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2 block">Account Type</label>
+              <div className="grid grid-cols-2 gap-2">
+                {ROLES.map((r) => (
+                  <button
+                    key={r.value}
+                    type="button"
+                    onClick={() => handleRoleChange(r.value)}
+                    className={`rounded-lg border px-3 py-2.5 text-xs font-semibold transition-all ${
+                      role === r.value
+                        ? "border-gold bg-gold-muted text-gold"
+                        : "border-border bg-background/50 text-muted-foreground hover:border-gold/40"
+                    }`}
+                  >
+                    {r.label}
+                  </button>
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">
+                {ROLES.find((r) => r.value === role)?.desc ?? ""}
+              </p>
             </div>
-            <p className="text-xs text-muted-foreground mt-2">
-              {ROLES.find((r) => r.value === role)!.desc}
-            </p>
-          </div>
+          )}
+          {isSuperRoute && (
+            <div className="mb-6 rounded-lg border border-gold/40 bg-gold-muted px-3 py-2.5">
+              <p className="text-[11px] uppercase tracking-wider text-gold font-bold">Superadmin Console</p>
+              <p className="text-xs text-muted-foreground mt-0.5">Restricted access. Sign in with owner credentials.</p>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
