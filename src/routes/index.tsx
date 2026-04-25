@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Crown, ArrowRight, Sparkles, MapPin, Wine, ShieldCheck, QrCode,
-  Star, Check, Instagram, Twitter, Mail,
+  Star, Check, Mail,
 } from "lucide-react";
 import { useAuth, rolePath } from "@/lib/auth";
 import { useStore, formatINR, PLAN_PRICES } from "@/lib/store";
