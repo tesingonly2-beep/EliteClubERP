@@ -141,8 +141,8 @@ export function HeaderActions() {
 
   // ----- profile content per role -----
   let profileMeta: { line: string; icon: any }[] = [];
-  let profileTitle = user.name;
-  let profileSubtitle = user.role;
+  let profileTitle: string = user.name;
+  let profileSubtitle: string = user.role;
 
   if (user.role === "partner") {
     const partner = partners.find((p) => p.id === user.partnerId);
