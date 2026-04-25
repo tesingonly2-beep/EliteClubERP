@@ -23,14 +23,7 @@ export const Route = createFileRoute("/")({
 
 function Landing() {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const { partners } = useStore();
-
-  useEffect(() => {
-    if (user) navigate({ to: rolePath(user.role) });
-  }, [user, navigate]);
-
-  if (user) return null;
 
   const activePartners = partners.filter((p) => p.status === "Active");
 
