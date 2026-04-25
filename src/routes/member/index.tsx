@@ -3,7 +3,7 @@ import { DashboardLayout } from "@/components/DashboardLayout";
 import { useAuth } from "@/lib/auth";
 import { useStore, formatINR, isExpired, daysUntil } from "@/lib/store";
 import { QRCodeSVG } from "qrcode.react";
-import { Crown, MapPin, Calendar, IndianRupee, Activity } from "lucide-react";
+import { Crown, MapPin, Calendar, IndianRupee, Activity, Star, Clock, Package } from "lucide-react";
 import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/member/")({
@@ -91,18 +91,77 @@ function MemberHome() {
           </div>
         </div>
 
-        {/* Nearby Partners */}
-        <div className="glass-panel p-5">
-          <h3 className="font-display text-lg font-semibold mb-4">Partner Venues</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {partners.filter((p) => p.status === "Active").map((p) => (
-              <div key={p.id} className="rounded-lg bg-background/50 p-4 hover:border-gold border border-transparent transition-colors">
-                <p className="font-semibold text-foreground">{p.name}</p>
-                <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
-                  <MapPin className="h-3 w-3" />{p.location}
-                </div>
-              </div>
-            ))}
+        {/* Partner Venues — hotel-style cards */}
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="font-display text-lg font-semibold">Partner Venues</h3>
+              <p className="text-xs text-muted-foreground">Your card unlocks these places.</p>
+            </div>
+            <span className="text-xs text-muted-foreground">{partners.filter((p) => p.status === "Active").length} active</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {partners.map((p) => {
+              const open = p.status === "Active";
+              return (
+                <motion.div
+                  key={p.id}
+                  whileHover={{ y: -4 }}
+                  transition={{ duration: 0.2 }}
+                  className="group rounded-xl overflow-hidden border border-border bg-card hover:border-gold/60 hover:shadow-[0_10px_40px_-10px_oklch(0.78_0.12_75/0.4)] transition-all"
+                >
+                  <div className="relative h-36 overflow-hidden bg-secondary">
+                    {p.photo ? (
+                      <img
+                        src={p.photo}
+                        alt={p.name}
+                        className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="h-full w-full flex items-center justify-center text-muted-foreground">
+                        <Crown className="h-8 w-8 opacity-30" />
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
+                    <div className="absolute top-3 left-3 flex items-center gap-1.5">
+                      <span
+                        className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider backdrop-blur ${
+                          open ? "bg-success/20 text-success border border-success/40" : "bg-destructive/20 text-destructive border border-destructive/40"
+                        }`}
+                      >
+                        <span className={`h-1.5 w-1.5 rounded-full ${open ? "bg-success animate-pulse" : "bg-destructive"}`} />
+                        {open ? "Open Now" : "Closed"}
+                      </span>
+                    </div>
+                    {p.rating !== undefined && (
+                      <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-background/80 backdrop-blur px-2 py-0.5 text-[11px] font-semibold border border-gold/30">
+                        <Star className="h-3 w-3 text-gold fill-gold" />
+                        <span className="text-foreground">{p.rating.toFixed(1)}</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-4 space-y-2">
+                    <div className="flex items-start justify-between gap-2">
+                      <h4 className="font-display text-lg font-bold text-foreground leading-tight">{p.name}</h4>
+                    </div>
+                    {p.cuisine && (
+                      <p className="text-[11px] uppercase tracking-wider text-gold font-semibold">{p.cuisine}</p>
+                    )}
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                      <MapPin className="h-3 w-3 shrink-0" />
+                      <span className="truncate">{p.location}</span>
+                    </div>
+                    {p.hours && (
+                      <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                        <Clock className="h-3 w-3 shrink-0" />
+                        <span>{p.hours}</span>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
 
@@ -112,16 +171,33 @@ function MemberHome() {
             <h3 className="font-display text-lg font-semibold">Recent Purchases</h3>
             <Link to="/member/history" className="text-xs text-gold hover:underline">View all</Link>
           </div>
-          <div className="space-y-2">
-            {myTxns.slice(0, 5).map((t) => (
-              <div key={t.id} className="flex items-center justify-between py-2 border-b border-border/50 last:border-0">
-                <div>
-                  <p className="text-sm font-medium text-foreground">{t.partnerName}</p>
-                  <p className="text-xs text-muted-foreground">{new Date(t.createdAt).toLocaleDateString("en-IN")}</p>
+          <div className="space-y-3">
+            {myTxns.slice(0, 5).map((t) => {
+              const itemCount = t.items.reduce((s, i) => s + i.qty, 0);
+              const itemNames = t.items.map((i) => `${i.qty}× ${i.name}`).join(", ");
+              return (
+                <div key={t.id} className="flex items-start justify-between gap-3 py-3 border-b border-border/50 last:border-0">
+                  <div className="flex items-start gap-3 min-w-0">
+                    <div className="h-10 w-10 rounded-lg bg-gold-muted flex items-center justify-center shrink-0">
+                      <Package className="h-5 w-5 text-gold" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-foreground truncate">{t.partnerName}</p>
+                      <p className="text-xs text-muted-foreground truncate">{itemNames}</p>
+                      <div className="flex items-center gap-2 mt-1 text-[11px] text-muted-foreground">
+                        <span>{itemCount} item{itemCount === 1 ? "" : "s"}</span>
+                        <span>·</span>
+                        <span>{new Date(t.createdAt).toLocaleString("en-IN", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <p className="text-sm font-bold text-gold">{formatINR(t.subtotal)}</p>
+                    <p className="text-[10px] uppercase tracking-wider text-muted-foreground">{t.paymentMode}</p>
+                  </div>
                 </div>
-                <p className="text-sm font-semibold text-gold">{formatINR(t.subtotal)}</p>
-              </div>
-            ))}
+              );
+            })}
             {myTxns.length === 0 && <p className="text-sm text-muted-foreground py-4 text-center">No purchases yet</p>}
           </div>
         </div>

@@ -11,10 +11,8 @@ import {
   BarChart3,
   Settings,
   Search,
-  Bell,
   ChevronLeft,
   Crown,
-  LogOut,
   Receipt,
   Home,
   History,
@@ -22,6 +20,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import type { Role } from "@/lib/store";
+import { HeaderActions } from "@/components/HeaderActions";
 
 const menuByRole: Record<Role, { title: string; to: string; icon: any }[]> = {
   superadmin: [
@@ -52,7 +51,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
 
   useEffect(() => {
     if (!user) navigate({ to: "/login" });
@@ -61,12 +60,6 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   if (!user) return null;
 
   const items = menuByRole[user.role];
-  const initials = user.name.split(" ").map((s) => s[0]).slice(0, 2).join("");
-
-  const handleLogout = () => {
-    logout();
-    navigate({ to: "/login" });
-  };
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
@@ -135,24 +128,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               />
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <button className="relative text-muted-foreground hover:text-foreground transition-colors">
-              <Bell className="h-5 w-5" />
-              <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-bold text-destructive-foreground">3</span>
-            </button>
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-full bg-gold/20 flex items-center justify-center">
-                <span className="text-xs font-semibold text-gold">{initials}</span>
-              </div>
-              <div className="hidden sm:block">
-                <p className="text-sm font-medium text-foreground leading-tight">{user.name}</p>
-                <p className="text-[10px] text-muted-foreground capitalize">{user.role}</p>
-              </div>
-            </div>
-            <button onClick={handleLogout} className="text-muted-foreground hover:text-destructive transition-colors" title="Logout">
-              <LogOut className="h-5 w-5" />
-            </button>
-          </div>
+          <HeaderActions />
         </header>
 
         <main className="flex-1 overflow-y-auto p-6">{children}</main>
