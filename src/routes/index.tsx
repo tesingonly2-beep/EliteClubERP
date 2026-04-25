@@ -191,9 +191,9 @@ function Landing() {
           <SectionHeading kicker="Membership" title="Pick the way you sip" />
           <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-5">
             {([
-              { plan: "Daily", price: PLAN_PRICES.Daily, tag: "Try it out", perks: ["1 day full access", "All partner venues", "Concierge booking"] },
+              { plan: "Daily", price: PLAN_PRICES.Daily, tag: "Try it out", perks: ["1 day full access", "All partner venues", "Concierge booking"], highlight: false },
               { plan: "Octa", price: PLAN_PRICES.Octa, tag: "Most popular", perks: ["8 days of access", "Priority reservations", "Welcome drink at every venue"], highlight: true },
-              { plan: "Yearly", price: PLAN_PRICES.Yearly, tag: "Founder tier", perks: ["365 days unlimited", "Private event invitations", "Dedicated concierge line"] },
+              { plan: "Yearly", price: PLAN_PRICES.Yearly, tag: "Founder tier", perks: ["365 days unlimited", "Private event invitations", "Dedicated concierge line"], highlight: false },
             ] as const).map((p) => (
               <div
                 key={p.plan}
@@ -268,9 +268,7 @@ function Landing() {
             <span className="text-xs">© {new Date().getFullYear()}</span>
           </div>
           <div className="flex items-center gap-5">
-            <a href="#" className="hover:text-foreground transition-colors"><Instagram className="h-4 w-4" /></a>
-            <a href="#" className="hover:text-foreground transition-colors"><Twitter className="h-4 w-4" /></a>
-            <a href="mailto:hello@elite.club" className="hover:text-foreground transition-colors"><Mail className="h-4 w-4" /></a>
+            <a href="mailto:hello@elite.club" className="hover:text-foreground transition-colors flex items-center gap-1.5"><Mail className="h-4 w-4" /> hello@elite.club</a>
           </div>
         </div>
       </footer>
