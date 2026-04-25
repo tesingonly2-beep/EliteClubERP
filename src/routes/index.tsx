@@ -84,7 +84,7 @@ function Landing() {
             transition={{ duration: 0.6, delay: 0.05 }}
             className="mt-6 font-display text-5xl sm:text-7xl font-bold leading-[1.05] tracking-tight"
           >
-            One card. <span className="bg-gradient-to-r from-gold via-yellow-200 to-gold bg-clip-text text-transparent">Every premium bar.</span>
+            One card. <span className="text-gold">Every premium bar.</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
